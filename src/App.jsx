@@ -1,13 +1,25 @@
-import { useState } from 'react'
-import { Puzzle, Sun, CheckCircle, AlertCircle, HelpCircle, TrendingDown } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Puzzle, Sun, CheckCircle, AlertCircle, HelpCircle, TrendingDown, Globe } from 'lucide-react'
 import { motion } from 'framer-motion'
 import LightBeam from './components/LightBeam'
 import WaveBackground from './components/WaveBackground'
 import SpotlightCard from './components/SpotlightCard'
+import { translations, detectLanguage } from './i18n'
 
 function App() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [lang, setLang] = useState('en')
+
+  useEffect(() => {
+    setLang(detectLanguage())
+  }, [])
+
+  const t = translations[lang]
+
+  const toggleLanguage = () => {
+    setLang(lang === 'en' ? 'ko' : 'en')
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -37,12 +49,21 @@ function App() {
             />
             <span className="text-xl font-serif font-medium text-neutral-900">Lighthouse</span>
           </motion.div>
-          <a
-            href="https://github.com/realsnoopso/task-lighthouse"
-            className="text-sm text-neutral-700 hover:text-neutral-900 transition"
-          >
-            GitHub
-          </a>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-2 text-sm text-neutral-700 hover:text-neutral-900 transition"
+            >
+              <Globe className="w-4 h-4" />
+              <span>{lang === 'en' ? '한국어' : 'English'}</span>
+            </button>
+            <a
+              href="https://github.com/realsnoopso/task-lighthouse"
+              className="text-sm text-neutral-700 hover:text-neutral-900 transition"
+            >
+              {t.github}
+            </a>
+          </div>
         </div>
       </header>
 
@@ -51,21 +72,20 @@ function App() {
         <LightBeam />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.h1 
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-light text-neutral-900 mb-6 md:mb-8 leading-tight tracking-tight"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-light text-neutral-900 mb-6 md:mb-8 leading-tight tracking-tight whitespace-pre-line"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            Break big work<br />into small wins
+            {t.heroTitle}
           </motion.h1>
           <motion.p 
-            className="text-lg sm:text-xl md:text-2xl text-neutral-600 mb-8 md:mb-12 md:mb-10 md:mb-16 leading-relaxed font-light px-4"
+            className="text-lg sm:text-xl md:text-2xl text-neutral-600 mb-8 md:mb-12 md:mb-10 md:mb-16 leading-relaxed font-light px-4 whitespace-pre-line"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           >
-            AI turns overwhelming projects into actionable steps.<br className="hidden sm:block" />
-            Know exactly what to do next, every single day.
+            {t.heroSubtitle}
           </motion.p>
           
           {/* Email Form */}
@@ -75,7 +95,7 @@ function App() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder={t.emailPlaceholder}
                 required
                 className="flex-1 px-5 py-3.5 rounded-full border border-neutral-300 bg-white/80 backdrop-blur focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent text-neutral-900 placeholder-neutral-400"
               />
@@ -83,15 +103,15 @@ function App() {
                 type="submit"
                 className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium hover:bg-neutral-800 transition-all hover:scale-105 w-full sm:w-auto"
               >
-                Join Waitlist
+                {t.joinWaitlist}
               </button>
             </div>
           </form>
           {submitted && (
-            <p className="text-green-600 text-sm font-medium">✓ You're on the list!</p>
+            <p className="text-green-600 text-sm font-medium">{t.waitlistSuccess}</p>
           )}
           <p className="text-sm text-neutral-500">
-            Be the first to know when we launch
+            {t.waitlistSubtext}
           </p>
         </div>
       </section>
@@ -101,7 +121,7 @@ function App() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-serif font-light text-neutral-900 mb-10 md:mb-16 text-center">
-              Sound familiar?
+              {t.problemTitle}
             </h2>
             <div className="space-y-8">
               <div className="flex items-start gap-4">
@@ -109,9 +129,9 @@ function App() {
                   <AlertCircle className="w-6 h-6 text-orange-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg text-neutral-900 mb-2">Big tasks, unclear starts</h3>
+                  <h3 className="font-semibold text-lg text-neutral-900 mb-2">{t.problem1Title}</h3>
                   <p className="text-neutral-600">
-                    You write "Launch new project" in your todo app, then stare at your screen wondering where to even begin.
+                    {t.problem1Desc}
                   </p>
                 </div>
               </div>
@@ -120,9 +140,9 @@ function App() {
                   <HelpCircle className="w-6 h-6 text-rose-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg text-neutral-900 mb-2">No definition of done</h3>
+                  <h3 className="font-semibold text-lg text-neutral-900 mb-2">{t.problem2Title}</h3>
                   <p className="text-neutral-600">
-                    "Is this good enough?" "Should I do more?" Without clear completion criteria, you never know when to move on.
+                    {t.problem2Desc}
                   </p>
                 </div>
               </div>
@@ -131,9 +151,9 @@ function App() {
                   <TrendingDown className="w-6 h-6 text-amber-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg text-neutral-900 mb-2">Days disappear without progress</h3>
+                  <h3 className="font-semibold text-lg text-neutral-900 mb-2">{t.problem3Title}</h3>
                   <p className="text-neutral-600">
-                    You check boxes, but can't actually see what you accomplished. No tangible wins, no momentum.
+                    {t.problem3Desc}
                   </p>
                 </div>
               </div>
@@ -147,10 +167,10 @@ function App() {
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-serif font-light text-neutral-900 mb-6 text-center">
-              Lighthouse guides you through
+              {t.solutionTitle}
             </h2>
             <p className="text-center text-neutral-600 mb-8 md:mb-12 md:mb-20 text-lg font-light">
-              AI breaks down your work, plans your day, and tracks your wins.
+              {t.solutionSubtitle}
             </p>
             
             <div className="grid md:grid-cols-3 gap-6 md:gap-8">
@@ -158,9 +178,9 @@ function App() {
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center mb-6">
                   <Puzzle className="w-7 h-7 text-orange-600" />
                 </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-3">Smart decomposition</h3>
+                <h3 className="text-xl font-bold text-neutral-900 mb-3">{t.feature1Title}</h3>
                 <p className="text-neutral-600">
-                  AI transforms "Launch new project" into 30-min to 2-hour chunks with clear completion criteria for each step.
+                  {t.feature1Desc}
                 </p>
               </SpotlightCard>
 
@@ -168,9 +188,9 @@ function App() {
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center mb-6">
                   <Sun className="w-7 h-7 text-rose-600" />
                 </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-3">Daily planning ritual</h3>
+                <h3 className="text-xl font-bold text-neutral-900 mb-3">{t.feature2Title}</h3>
                 <p className="text-neutral-600">
-                  3-minute morning check-in sets your priorities. Answer quick questions, get a focused plan for the day.
+                  {t.feature2Desc}
                 </p>
               </SpotlightCard>
 
@@ -178,9 +198,9 @@ function App() {
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-100 flex items-center justify-center mb-6">
                   <CheckCircle className="w-7 h-7 text-amber-600" />
                 </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-3">Effortless tracking</h3>
+                <h3 className="text-xl font-bold text-neutral-900 mb-3">{t.feature3Title}</h3>
                 <p className="text-neutral-600">
-                  Quick check-ins build your progress log automatically. End each day knowing exactly what you shipped.
+                  {t.feature3Desc}
                 </p>
               </SpotlightCard>
             </div>
@@ -193,7 +213,7 @@ function App() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-serif font-light text-neutral-900 mb-10 md:mb-16 text-center">
-              How it works
+              {t.howItWorksTitle}
             </h2>
             
             <div className="space-y-6">
@@ -202,9 +222,9 @@ function App() {
                   1
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg text-neutral-900 mb-1">Dump your big tasks</h3>
+                  <h3 className="font-semibold text-lg text-neutral-900 mb-1">{t.step1Title}</h3>
                   <p className="text-neutral-600">
-                    Add anything overwhelming: "Plan Q2 strategy", "Redesign onboarding", whatever's on your mind.
+                    {t.step1Desc}
                   </p>
                 </div>
               </div>
@@ -214,9 +234,9 @@ function App() {
                   2
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg text-neutral-900 mb-1">AI breaks it down</h3>
+                  <h3 className="font-semibold text-lg text-neutral-900 mb-1">{t.step2Title}</h3>
                   <p className="text-neutral-600">
-                    Get actionable 30-min to 2-hour tasks with clear outcomes. "Research competitors", "Draft pricing model", "Pick marketing channels".
+                    {t.step2Desc}
                   </p>
                 </div>
               </div>
@@ -226,9 +246,9 @@ function App() {
                   3
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg text-neutral-900 mb-1">Execute and check in</h3>
+                  <h3 className="font-semibold text-lg text-neutral-900 mb-1">{t.step3Title}</h3>
                   <p className="text-neutral-600">
-                    Mark progress as you go. Your daily retrospective builds itself automatically.
+                    {t.step3Desc}
                   </p>
                 </div>
               </div>
@@ -240,11 +260,11 @@ function App() {
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-amber-100 via-rose-100 to-orange-100">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif font-light mb-8 text-neutral-900">
-            Stop staring.<br className="md:hidden" /> Start shipping.
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif font-light mb-8 text-neutral-900 whitespace-pre-line">
+            {t.ctaTitle}
           </h2>
           <p className="text-neutral-700 text-lg mb-8 md:mb-12 max-w-2xl mx-auto font-light">
-            Lighthouse turns paralysis into progress. Break big work into small wins.
+            {t.ctaSubtitle}
           </p>
           <form onSubmit={handleSubmit} className="max-w-md mx-auto px-4">
             <div className="flex flex-col sm:flex-row gap-3">
@@ -252,7 +272,7 @@ function App() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
+                placeholder={t.emailPlaceholderShort}
                 required
                 className="flex-1 px-5 py-3.5 rounded-full border border-neutral-300 bg-white/90 backdrop-blur text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
               />
@@ -260,12 +280,12 @@ function App() {
                 type="submit"
                 className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium hover:bg-neutral-800 transition-all hover:scale-105 w-full sm:w-auto"
               >
-                Join Waitlist
+                {t.joinWaitlist}
               </button>
             </div>
           </form>
           {submitted && (
-            <p className="text-green-400 text-sm font-medium mt-2">✓ You're on the list!</p>
+            <p className="text-green-600 text-sm font-medium mt-2">{t.waitlistSuccess}</p>
           )}
         </div>
       </section>
@@ -287,18 +307,18 @@ function App() {
             </div>
             <div className="flex gap-6 text-sm text-neutral-600">
               <a href="#" className="hover:text-neutral-900 transition">
-                Privacy
+                {t.privacy}
               </a>
               <a href="#" className="hover:text-neutral-900 transition">
-                Terms
+                {t.terms}
               </a>
               <a href="mailto:hello@tasklighthouse.app" className="hover:text-neutral-900 transition">
-                Contact
+                {t.contact}
               </a>
             </div>
           </div>
           <div className="text-center mt-6 text-sm text-neutral-500">
-            © 2026 Lighthouse. All rights reserved.
+            {t.copyright}
           </div>
         </div>
       </footer>
