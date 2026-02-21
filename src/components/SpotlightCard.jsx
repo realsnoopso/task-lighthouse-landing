@@ -35,7 +35,7 @@ export default function SpotlightCard({ children, className = '' }) {
               top: mousePosition.y,
               width: '500px',
               height: '500px',
-              background: 'radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, rgba(251, 146, 60, 0.1) 40%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(251, 191, 36, 0.08) 0%, rgba(163, 163, 163, 0.05) 40%, transparent 70%)',
               transform: 'translate(-50%, -50%)',
             }}
             initial={{ opacity: 0, scale: 0.8 }}
@@ -44,11 +44,11 @@ export default function SpotlightCard({ children, className = '' }) {
             transition={{ duration: 0.3 }}
           />
           
-          {/* Glow border */}
+          {/* Glow border - very subtle */}
           <div
             className="absolute inset-0 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
             style={{
-              background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(251, 146, 60, 0.3), transparent 40%)`,
+              background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(251, 191, 36, 0.1), transparent 40%)`,
               filter: 'blur(20px)',
             }}
           />

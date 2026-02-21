@@ -31,7 +31,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-rose-50 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 via-white to-neutral-100 overflow-x-hidden">
       {/* Generative Background */}
       <GenerativeBackground />
       
@@ -104,14 +104,19 @@ function App() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t.emailPlaceholder}
                 required
-                className="flex-1 px-5 py-3.5 rounded-full border border-neutral-300 bg-white/80 backdrop-blur focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent text-neutral-900 placeholder-neutral-400"
+                className="flex-1 px-5 py-3.5 rounded-full border border-neutral-300 bg-white/80 backdrop-blur focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-neutral-900 placeholder-neutral-400 transition-all"
               />
-              <button
+              <motion.button
                 type="submit"
-                className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium hover:bg-neutral-800 transition-all hover:scale-105 w-full sm:w-auto"
+                className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium transition-all w-full sm:w-auto"
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 0 15px rgba(251, 191, 36, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
               >
                 {t.joinWaitlist}
-              </button>
+              </motion.button>
             </div>
           </form>
           {submitted && (
@@ -132,8 +137,8 @@ function App() {
             </h2>
             <div className="space-y-8">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
-                  <AlertCircle className="w-6 h-6 text-orange-600" />
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-neutral-100 flex items-center justify-center">
+                  <AlertCircle className="w-6 h-6 text-neutral-700" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-neutral-900 mb-2">{t.problem1Title}</h3>
@@ -143,8 +148,8 @@ function App() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center">
-                  <HelpCircle className="w-6 h-6 text-rose-600" />
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-neutral-100 flex items-center justify-center">
+                  <HelpCircle className="w-6 h-6 text-neutral-700" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-neutral-900 mb-2">{t.problem2Title}</h3>
@@ -154,8 +159,8 @@ function App() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-amber-100 to-yellow-100 flex items-center justify-center">
-                  <TrendingDown className="w-6 h-6 text-amber-600" />
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-neutral-100 flex items-center justify-center">
+                  <TrendingDown className="w-6 h-6 text-neutral-700" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-neutral-900 mb-2">{t.problem3Title}</h3>
@@ -182,8 +187,8 @@ function App() {
             
             <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               <SpotlightCard className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-lg transition-shadow">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center mb-6">
-                  <Puzzle className="w-7 h-7 text-orange-600" />
+                <div className="w-14 h-14 rounded-2xl bg-neutral-100 flex items-center justify-center mb-6 group-hover:bg-amber-50 transition-colors">
+                  <Puzzle className="w-7 h-7 text-neutral-700" />
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">{t.feature1Title}</h3>
                 <p className="text-neutral-600">
@@ -192,8 +197,8 @@ function App() {
               </SpotlightCard>
 
               <SpotlightCard className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-lg transition-shadow">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center mb-6">
-                  <Sun className="w-7 h-7 text-rose-600" />
+                <div className="w-14 h-14 rounded-2xl bg-neutral-100 flex items-center justify-center mb-6 group-hover:bg-amber-50 transition-colors">
+                  <Sun className="w-7 h-7 text-neutral-700" />
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">{t.feature2Title}</h3>
                 <p className="text-neutral-600">
@@ -202,8 +207,8 @@ function App() {
               </SpotlightCard>
 
               <SpotlightCard className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-lg transition-shadow">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-100 flex items-center justify-center mb-6">
-                  <CheckCircle className="w-7 h-7 text-amber-600" />
+                <div className="w-14 h-14 rounded-2xl bg-neutral-100 flex items-center justify-center mb-6 group-hover:bg-amber-50 transition-colors">
+                  <CheckCircle className="w-7 h-7 text-neutral-700" />
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">{t.feature3Title}</h3>
                 <p className="text-neutral-600">
@@ -265,7 +270,7 @@ function App() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-amber-100 via-rose-100 to-orange-100">
+      <section className="py-16 md:py-24 bg-neutral-100">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif font-light mb-8 text-neutral-900 whitespace-pre-line">
             {t.ctaTitle}
@@ -281,14 +286,19 @@ function App() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t.emailPlaceholderShort}
                 required
-                className="flex-1 px-5 py-3.5 rounded-full border border-neutral-300 bg-white/90 backdrop-blur text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent"
+                className="flex-1 px-5 py-3.5 rounded-full border border-neutral-300 bg-white/90 backdrop-blur text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
               />
-              <button
+              <motion.button
                 type="submit"
-                className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium hover:bg-neutral-800 transition-all hover:scale-105 w-full sm:w-auto"
+                className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium transition-all w-full sm:w-auto"
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 0 15px rgba(251, 191, 36, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
               >
                 {t.joinWaitlist}
-              </button>
+              </motion.button>
             </div>
           </form>
           {submitted && (

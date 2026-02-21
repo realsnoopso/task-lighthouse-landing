@@ -46,7 +46,7 @@ export default function GenerativeBackground() {
 
         display() {
           p.noStroke()
-          p.fill(251, 191, 36, this.opacity) // amber
+          p.fill(163, 163, 163, this.opacity * 0.5) // subtle gray
           p.circle(this.x, this.y, this.size)
         }
       }
@@ -89,9 +89,9 @@ export default function GenerativeBackground() {
         }
 
         // Create waves at bottom
-        waves.push(new Wave(p.height - 100, 15, 0.01, 0.02, p.color(251, 191, 36, 40)))
-        waves.push(new Wave(p.height - 80, 20, 0.008, 0.015, p.color(249, 115, 22, 30)))
-        waves.push(new Wave(p.height - 60, 25, 0.012, 0.025, p.color(251, 146, 60, 20)))
+        waves.push(new Wave(p.height - 100, 15, 0.01, 0.02, p.color(163, 163, 163, 20)))
+        waves.push(new Wave(p.height - 80, 20, 0.008, 0.015, p.color(163, 163, 163, 15)))
+        waves.push(new Wave(p.height - 60, 25, 0.012, 0.025, p.color(163, 163, 163, 10)))
       }
 
       p.draw = () => {
@@ -108,17 +108,15 @@ export default function GenerativeBackground() {
         p.translate(p.width / 2, 60)
         rotatingBeam += 0.01
         
-        // Draw sweeping beam
-        for (let i = 0; i < 3; i++) {
-          let angle = rotatingBeam + (i * p.TWO_PI / 3)
-          let beamLength = p.height * 0.4
-          
-          p.stroke(251, 191, 36, 15 - (i * 5))
-          p.strokeWeight(40 - (i * 10))
-          p.line(0, 0, 
-                 p.cos(angle) * beamLength, 
-                 p.sin(angle) * beamLength)
-        }
+        // Draw sweeping beam (one subtle amber beam only)
+        let angle = rotatingBeam
+        let beamLength = p.height * 0.4
+        
+        p.stroke(251, 191, 36, 8) // very subtle amber
+        p.strokeWeight(30)
+        p.line(0, 0, 
+               p.cos(angle) * beamLength, 
+               p.sin(angle) * beamLength)
         p.pop()
 
         // Update and display waves
