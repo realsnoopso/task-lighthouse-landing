@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Puzzle, Sun, CheckCircle, AlertCircle, HelpCircle, TrendingDown } from 'lucide-react'
 
 function App() {
   const [email, setEmail] = useState('')
@@ -78,7 +79,9 @@ function App() {
             </h2>
             <div className="space-y-8">
               <div className="flex items-start gap-4">
-                <span className="text-2xl flex-shrink-0">😵</span>
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
+                  <AlertCircle className="w-6 h-6 text-orange-600" />
+                </div>
                 <div>
                   <h3 className="font-semibold text-lg text-neutral-900 mb-2">Big tasks, unclear starts</h3>
                   <p className="text-neutral-600">
@@ -87,7 +90,9 @@ function App() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="text-2xl flex-shrink-0">🤔</span>
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center">
+                  <HelpCircle className="w-6 h-6 text-rose-600" />
+                </div>
                 <div>
                   <h3 className="font-semibold text-lg text-neutral-900 mb-2">No definition of done</h3>
                   <p className="text-neutral-600">
@@ -96,7 +101,9 @@ function App() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <span className="text-2xl flex-shrink-0">😔</span>
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-amber-100 to-yellow-100 flex items-center justify-center">
+                  <TrendingDown className="w-6 h-6 text-amber-600" />
+                </div>
                 <div>
                   <h3 className="font-semibold text-lg text-neutral-900 mb-2">Days disappear without progress</h3>
                   <p className="text-neutral-600">
@@ -122,7 +129,9 @@ function App() {
             
             <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               <div className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-md transition">
-                <div className="text-4xl mb-4">🧩</div>
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center mb-6">
+                  <Puzzle className="w-7 h-7 text-orange-600" />
+                </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">Smart decomposition</h3>
                 <p className="text-neutral-600">
                   AI transforms "Launch new project" into 30-min to 2-hour chunks with clear completion criteria for each step.
@@ -130,7 +139,9 @@ function App() {
               </div>
 
               <div className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-md transition">
-                <div className="text-4xl mb-4">☀️</div>
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center mb-6">
+                  <Sun className="w-7 h-7 text-rose-600" />
+                </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">Daily planning ritual</h3>
                 <p className="text-neutral-600">
                   3-minute morning check-in sets your priorities. Answer quick questions, get a focused plan for the day.
@@ -138,7 +149,9 @@ function App() {
               </div>
 
               <div className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-md transition">
-                <div className="text-4xl mb-4">✅</div>
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-100 flex items-center justify-center mb-6">
+                  <CheckCircle className="w-7 h-7 text-amber-600" />
+                </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">Effortless tracking</h3>
                 <p className="text-neutral-600">
                   Quick check-ins build your progress log automatically. End each day knowing exactly what you shipped.
