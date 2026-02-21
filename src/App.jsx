@@ -22,12 +22,36 @@ function App() {
     setLang(lang === 'en' ? 'ko' : 'en')
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // TODO: Connect to waitlist API
-    console.log('Email submitted:', email)
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          email,
+          lang 
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        console.log('Waitlist signup successful:', data)
+        setSubmitted(true)
+        setEmail('') // Clear email input
+        setTimeout(() => setSubmitted(false), 5000)
+      } else {
+        console.error('Waitlist signup failed:', data.error)
+        alert('Failed to join waitlist. Please try again.')
+      }
+    } catch (error) {
+      console.error('Network error:', error)
+      alert('Network error. Please try again.')
+    }
   }
 
   return (
