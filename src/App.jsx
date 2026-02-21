@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Puzzle, Sun, CheckCircle, AlertCircle, HelpCircle, TrendingDown, Globe } from 'lucide-react'
 import { motion } from 'framer-motion'
-import LightBeam from './components/LightBeam'
+import EnhancedLightBeam from './components/EnhancedLightBeam'
 import WaveBackground from './components/WaveBackground'
 import SpotlightCard from './components/SpotlightCard'
+import GenerativeBackground from './components/GenerativeBackground'
 import { translations, detectLanguage } from './i18n'
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-rose-50 overflow-x-hidden">
+      {/* Generative Background */}
+      <GenerativeBackground />
+      
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
@@ -69,13 +73,16 @@ function App() {
 
       {/* Hero Section */}
       <section className="relative container mx-auto px-4 py-12 md:py-20 md:py-32 overflow-hidden">
-        <LightBeam />
+        <EnhancedLightBeam />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.h1 
             className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-light text-neutral-900 mb-6 md:mb-8 leading-tight tracking-tight whitespace-pre-line"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
+            style={{
+              textShadow: '0 2px 20px rgba(251, 191, 36, 0.1)'
+            }}
           >
             {t.heroTitle}
           </motion.h1>
