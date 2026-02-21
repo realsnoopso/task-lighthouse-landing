@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import { Puzzle, Sun, CheckCircle, AlertCircle, HelpCircle, TrendingDown } from 'lucide-react'
+import { motion } from 'framer-motion'
+import LightBeam from './components/LightBeam'
+import WaveBackground from './components/WaveBackground'
+import SpotlightCard from './components/SpotlightCard'
 
 function App() {
   const [email, setEmail] = useState('')
@@ -18,10 +22,21 @@ function App() {
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src="/lighthouse-logo.svg" alt="Lighthouse" className="w-8 h-8" />
+          <motion.div 
+            className="flex items-center gap-3"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.img 
+              src="/lighthouse-logo.svg" 
+              alt="Lighthouse" 
+              className="w-8 h-8"
+              whileHover={{ rotate: 360, scale: 1.1 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            />
             <span className="text-xl font-serif font-medium text-neutral-900">Lighthouse</span>
-          </div>
+          </motion.div>
           <a
             href="https://github.com/realsnoopso/task-lighthouse"
             className="text-sm text-neutral-700 hover:text-neutral-900 transition"
@@ -32,15 +47,26 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-12 md:py-20 md:py-32">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-light text-neutral-900 mb-6 md:mb-8 leading-tight tracking-tight">
+      <section className="relative container mx-auto px-4 py-12 md:py-20 md:py-32 overflow-hidden">
+        <LightBeam />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <motion.h1 
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-light text-neutral-900 mb-6 md:mb-8 leading-tight tracking-tight"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
             Break big work<br />into small wins
-          </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-neutral-600 mb-8 md:mb-12 md:mb-10 md:mb-16 leading-relaxed font-light px-4">
+          </motion.h1>
+          <motion.p 
+            className="text-lg sm:text-xl md:text-2xl text-neutral-600 mb-8 md:mb-12 md:mb-10 md:mb-16 leading-relaxed font-light px-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          >
             AI turns overwhelming projects into actionable steps.<br className="hidden sm:block" />
             Know exactly what to do next, every single day.
-          </p>
+          </motion.p>
           
           {/* Email Form */}
           <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-4 px-4">
@@ -128,7 +154,7 @@ function App() {
             </p>
             
             <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-              <div className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-md transition">
+              <SpotlightCard className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-lg transition-shadow">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center mb-6">
                   <Puzzle className="w-7 h-7 text-orange-600" />
                 </div>
@@ -136,9 +162,9 @@ function App() {
                 <p className="text-neutral-600">
                   AI transforms "Launch new project" into 30-min to 2-hour chunks with clear completion criteria for each step.
                 </p>
-              </div>
+              </SpotlightCard>
 
-              <div className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-md transition">
+              <SpotlightCard className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-lg transition-shadow">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center mb-6">
                   <Sun className="w-7 h-7 text-rose-600" />
                 </div>
@@ -146,9 +172,9 @@ function App() {
                 <p className="text-neutral-600">
                   3-minute morning check-in sets your priorities. Answer quick questions, get a focused plan for the day.
                 </p>
-              </div>
+              </SpotlightCard>
 
-              <div className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-md transition">
+              <SpotlightCard className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-lg transition-shadow">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-100 flex items-center justify-center mb-6">
                   <CheckCircle className="w-7 h-7 text-amber-600" />
                 </div>
@@ -156,7 +182,7 @@ function App() {
                 <p className="text-neutral-600">
                   Quick check-ins build your progress log automatically. End each day knowing exactly what you shipped.
                 </p>
-              </div>
+              </SpotlightCard>
             </div>
           </div>
         </div>
@@ -245,11 +271,18 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-neutral-50/50 py-8 border-t border-neutral-200/50">
-        <div className="container mx-auto px-4">
+      <footer className="relative bg-neutral-50/50 py-8 border-t border-neutral-200/50 overflow-hidden">
+        <WaveBackground />
+        <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">
-              <img src="/lighthouse-logo.svg" alt="Lighthouse" className="w-7 h-7" />
+              <motion.img 
+                src="/lighthouse-logo.svg" 
+                alt="Lighthouse" 
+                className="w-7 h-7"
+                whileHover={{ rotate: 360, scale: 1.1 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+              />
               <span className="font-semibold text-neutral-900">Lighthouse</span>
             </div>
             <div className="flex gap-6 text-sm text-neutral-600">
