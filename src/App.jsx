@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Puzzle, Sun, CheckCircle, AlertCircle, HelpCircle, TrendingDown } from 'lucide-react'
+import { Puzzle, Sun, CheckCircle, AlertCircle, HelpCircle, TrendingDown, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import LightBeam from './components/LightBeam'
 import WaveBackground from './components/WaveBackground'
 import SpotlightCard from './components/SpotlightCard'
+import HeroVisual from './components/HeroVisual'
 
 function App() {
   const [email, setEmail] = useState('')
@@ -47,46 +48,86 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative container mx-auto px-4 py-12 md:py-20 md:py-32 overflow-hidden">
+      <section className="relative container mx-auto px-4 py-16 md:py-24 lg:py-32 overflow-hidden min-h-[85vh] flex items-center">
         <LightBeam />
-        <div className="max-w-4xl mx-auto text-center relative z-10">
+        
+        {/* Floating particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 opacity-30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.2, 0.5, 0.2],
+              }}
+              transition={{
+                duration: 3 + i,
+                repeat: Infinity,
+                delay: i * 0.4,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="max-w-5xl mx-auto text-center relative z-10 w-full">
+          <HeroVisual />
+          
           <motion.h1 
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-light text-neutral-900 mb-6 md:mb-8 leading-tight tracking-tight"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-serif font-light text-neutral-900 mb-8 leading-[1.1] tracking-tight"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           >
-            Break big work<br />into small wins
+            <span className="inline-block">Break big work</span><br />
+            <span className="inline-block bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 bg-clip-text text-transparent">
+              into small wins
+            </span>
           </motion.h1>
+          
           <motion.p 
-            className="text-lg sm:text-xl md:text-2xl text-neutral-600 mb-8 md:mb-12 md:mb-10 md:mb-16 leading-relaxed font-light px-4"
+            className="text-xl sm:text-2xl md:text-3xl text-neutral-600 mb-12 md:mb-16 leading-relaxed font-light max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           >
-            AI turns overwhelming projects into actionable steps.<br className="hidden sm:block" />
+            AI turns overwhelming projects into actionable steps.
+            <br className="hidden sm:block" />
             Know exactly what to do next, every single day.
           </motion.p>
           
           {/* Email Form */}
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-4 px-4">
-            <div className="flex flex-col sm:flex-row gap-3">
+          <motion.form 
+            onSubmit={handleSubmit} 
+            className="max-w-xl mx-auto mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 required
-                className="flex-1 px-5 py-3.5 rounded-full border border-neutral-300 bg-white/80 backdrop-blur focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent text-neutral-900 placeholder-neutral-400"
+                className="w-full sm:w-auto flex-1 px-6 py-4 rounded-full border-2 border-neutral-300 bg-white/90 backdrop-blur focus:outline-none focus:ring-4 focus:ring-amber-500/20 focus:border-amber-500 text-neutral-900 placeholder-neutral-400 text-lg shadow-lg"
               />
-              <button
+              <motion.button
                 type="submit"
-                className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium hover:bg-neutral-800 transition-all hover:scale-105 w-full sm:w-auto"
+                className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 text-white rounded-full font-semibold text-lg shadow-2xl shadow-orange-500/30 flex items-center justify-center gap-2 group"
+                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(251, 146, 60, 0.4)" }}
+                whileTap={{ scale: 0.98 }}
               >
                 Join Waitlist
-              </button>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </motion.button>
             </div>
-          </form>
+          </motion.form>
           {submitted && (
             <p className="text-green-600 text-sm font-medium">✓ You're on the list!</p>
           )}
