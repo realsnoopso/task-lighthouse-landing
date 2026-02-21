@@ -6,6 +6,7 @@ import WaveBackground from './components/WaveBackground'
 import SpotlightCard from './components/SpotlightCard'
 import GenerativeBackground from './components/GenerativeBackground'
 import { translations, detectLanguage } from './i18n'
+import { initAmplitude, trackEvent, events } from './utils/amplitude'
 
 function App() {
   const [email, setEmail] = useState('')
@@ -13,17 +14,39 @@ function App() {
   const [lang, setLang] = useState('en')
 
   useEffect(() => {
-    setLang(detectLanguage())
+    // Initialize Amplitude
+    initAmplitude()
+    
+    // Detect and set language
+    const detectedLang = detectLanguage()
+    setLang(detectedLang)
+    
+    // Track page view
+    trackEvent(events.PAGE_VIEW, {
+      language: detectedLang,
+      referrer: document.referrer,
+      url: window.location.href,
+    })
   }, [])
 
   const t = translations[lang]
 
   const toggleLanguage = () => {
-    setLang(lang === 'en' ? 'ko' : 'en')
+    const newLang = lang === 'en' ? 'ko' : 'en'
+    setLang(newLang)
+    trackEvent(events.LANGUAGE_CHANGED, {
+      from: lang,
+      to: newLang,
+    })
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
+    trackEvent(events.CTA_CLICKED, {
+      location: e.target.id || 'unknown',
+      language: lang,
+    })
     
     try {
       const response = await fetch('/api/waitlist', {
@@ -41,15 +64,27 @@ function App() {
 
       if (response.ok) {
         console.log('Waitlist signup successful:', data)
+        trackEvent(events.EMAIL_SUBMITTED, {
+          language: lang,
+          emailId: data.emailId,
+        })
         setSubmitted(true)
         setEmail('') // Clear email input
         setTimeout(() => setSubmitted(false), 5000)
       } else {
         console.error('Waitlist signup failed:', data.error)
+        trackEvent(events.EMAIL_FAILED, {
+          language: lang,
+          error: data.error,
+        })
         alert('Failed to join waitlist. Please try again.')
       }
     } catch (error) {
       console.error('Network error:', error)
+      trackEvent(events.EMAIL_FAILED, {
+        language: lang,
+        error: error.message,
+      })
       alert('Network error. Please try again.')
     }
   }
@@ -77,21 +112,13 @@ function App() {
             />
             <span className="text-xl font-serif font-medium text-neutral-900">Lighthouse</span>
           </motion.div>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center gap-2 text-sm text-neutral-700 hover:text-neutral-900 transition"
-            >
-              <Globe className="w-4 h-4" />
-              <span>{lang === 'en' ? '한국어' : 'English'}</span>
-            </button>
-            <a
-              href="https://github.com/realsnoopso/task-lighthouse"
-              className="text-sm text-neutral-700 hover:text-neutral-900 transition"
-            >
-              {t.github}
-            </a>
-          </div>
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center gap-2 text-sm text-neutral-700 hover:text-neutral-900 transition"
+          >
+            <Globe className="w-4 h-4" />
+            <span>{lang === 'en' ? '한국어' : 'English'}</span>
+          </button>
         </div>
       </header>
 
@@ -120,7 +147,7 @@ function App() {
           </motion.p>
           
           {/* Email Form */}
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-4 px-4">
+          <form onSubmit={handleSubmit} id="hero-form" className="max-w-md mx-auto mb-4 px-4">
             <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
@@ -302,7 +329,7 @@ function App() {
           <p className="text-neutral-700 text-lg mb-8 md:mb-12 max-w-2xl mx-auto font-light">
             {t.ctaSubtitle}
           </p>
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto px-4">
+          <form onSubmit={handleSubmit} id="cta-form" className="max-w-md mx-auto px-4">
             <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
