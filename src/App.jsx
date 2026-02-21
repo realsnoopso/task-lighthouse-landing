@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Check, ArrowRight, Sparkles, Target, TrendingUp } from 'lucide-react'
+import { Check, ArrowRight, Puzzle, Sun, CheckCircle } from 'lucide-react'
 import { Button } from './components/ui/button'
 import { Input } from './components/ui/input'
 import { initAmplitude, trackEvent, events } from './utils/amplitude'
@@ -36,7 +36,7 @@ function App() {
     e.preventDefault()
     
     trackEvent(events.CTA_CLICKED, {
-      location: 'hero',
+      location: e.target.id || 'hero',
       language: lang,
     })
     
@@ -108,41 +108,37 @@ function App() {
       {/* Hero Section */}
       <section className="container max-w-screen-2xl py-24 md:py-32 lg:py-40">
         <div className="flex flex-col items-start gap-8 md:gap-12">
-          <div className="grid gap-6">
-            <div className="inline-flex items-center gap-2 rounded-lg border border-border bg-muted px-3 py-1 text-sm font-medium w-fit">
-              <Sparkles className="h-4 w-4" />
-              {lang === 'en' ? 'AI-powered task planning' : 'AI 기반 작업 계획'}
-            </div>
+          <div className="grid gap-6 max-w-4xl">
             <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl">
-              {lang === 'en' ? (
-                <>
-                  Break big work<br />into small wins
-                </>
-              ) : (
-                <>
-                  큰 작업을<br />작은 성취로
-                </>
-              )}
+              {t.heroTitle.split('\\n').map((line, i) => (
+                <span key={i}>
+                  {line}
+                  {i === 0 && <br />}
+                </span>
+              ))}
             </h1>
-            <p className="max-w-[600px] text-lg text-muted-foreground md:text-xl">
-              {lang === 'en' 
-                ? 'AI turns overwhelming projects into actionable steps. Know exactly what to do next, every single day.'
-                : 'AI가 막막한 프로젝트를 실행 가능한 단계로 바꿉니다. 매일 무엇을 해야 할지 명확하게 알 수 있습니다.'}
+            <p className="max-w-[600px] text-lg text-muted-foreground md:text-xl leading-relaxed">
+              {t.heroSubtitle.split('\\n').map((line, i) => (
+                <span key={i}>
+                  {line}
+                  {i === 0 && <br className="hidden sm:block" />}
+                </span>
+              ))}
             </p>
           </div>
           
           {/* Email Form */}
-          <form onSubmit={handleSubmit} className="flex w-full max-w-md flex-col gap-2 sm:flex-row">
+          <form onSubmit={handleSubmit} id="hero-form" className="flex w-full max-w-md flex-col gap-2 sm:flex-row">
             <Input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder={lang === 'en' ? 'Enter your email' : '이메일을 입력하세요'}
+              placeholder={t.emailPlaceholder}
               required
               className="h-10"
             />
             <Button type="submit" size="default" className="h-10">
-              {lang === 'en' ? 'Join Waitlist' : '대기자 등록'}
+              {t.joinWaitlist}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </form>
@@ -150,64 +146,149 @@ function App() {
           {submitted && (
             <p className="flex items-center gap-2 text-sm font-medium text-green-600">
               <Check className="h-4 w-4" />
-              {lang === 'en' ? "You're on the list!" : '등록 완료!'}
+              {t.waitlistSuccess}
             </p>
           )}
           <p className="text-sm text-muted-foreground">
-            {lang === 'en' ? 'Be the first to know when we launch' : '출시 소식을 가장 먼저 받아보세요'}
+            {t.waitlistSubtext}
           </p>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="border-t border-border bg-muted/50">
+      {/* Problem Section */}
+      <section className="border-t border-border bg-muted/30">
         <div className="container max-w-screen-2xl py-24 md:py-32">
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="grid gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-background">
-                <Sparkles className="h-6 w-6" />
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-16 text-center">
+              {t.problemTitle}
+            </h2>
+            <div className="space-y-8">
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">{t.problem1Title}</h3>
+                  <p className="text-muted-foreground">{t.problem1Desc}</p>
+                </div>
               </div>
-              <div className="grid gap-2">
-                <h3 className="text-xl font-semibold">
-                  {lang === 'en' ? 'Smart decomposition' : '스마트 작업 분해'}
-                </h3>
-                <p className="text-muted-foreground">
-                  {lang === 'en' 
-                    ? 'AI transforms "Launch new project" into 30-min to 2-hour chunks with clear completion criteria.'
-                    : 'AI가 "새 프로젝트 시작"을 명확한 완료 기준이 있는 30분~2시간 단위 작업으로 변환합니다.'}
-                </p>
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">{t.problem2Title}</h3>
+                  <p className="text-muted-foreground">{t.problem2Desc}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-border bg-background">
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                    <polyline points="17 6 23 6 23 12"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-2">{t.problem3Title}</h3>
+                  <p className="text-muted-foreground">{t.problem3Desc}</p>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="grid gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-background">
-                <Target className="h-6 w-6" />
+      {/* Solution Section */}
+      <section className="border-t border-border">
+        <div className="container max-w-screen-2xl py-24 md:py-32">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-6 text-center">
+              {t.solutionTitle}
+            </h2>
+            <p className="text-center text-muted-foreground mb-20 text-lg">
+              {t.solutionSubtitle}
+            </p>
+            
+            <div className="grid gap-8 md:grid-cols-3">
+              <div className="grid gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-background">
+                  <Puzzle className="h-6 w-6" />
+                </div>
+                <div className="grid gap-2">
+                  <h3 className="text-xl font-semibold">{t.feature1Title}</h3>
+                  <p className="text-muted-foreground">{t.feature1Desc}</p>
+                </div>
               </div>
-              <div className="grid gap-2">
-                <h3 className="text-xl font-semibold">
-                  {lang === 'en' ? 'Daily planning' : '일일 계획'}
-                </h3>
-                <p className="text-muted-foreground">
-                  {lang === 'en' 
-                    ? '3-minute morning check-in sets your priorities. Answer quick questions, get a focused plan.'
-                    : '3분 아침 체크인으로 우선순위를 설정합니다. 간단한 질문에 답하고 집중 계획을 받으세요.'}
-                </p>
+
+              <div className="grid gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-background">
+                  <Sun className="h-6 w-6" />
+                </div>
+                <div className="grid gap-2">
+                  <h3 className="text-xl font-semibold">{t.feature2Title}</h3>
+                  <p className="text-muted-foreground">{t.feature2Desc}</p>
+                </div>
+              </div>
+
+              <div className="grid gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-background">
+                  <CheckCircle className="h-6 w-6" />
+                </div>
+                <div className="grid gap-2">
+                  <h3 className="text-xl font-semibold">{t.feature3Title}</h3>
+                  <p className="text-muted-foreground">{t.feature3Desc}</p>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="grid gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-background">
-                <TrendingUp className="h-6 w-6" />
+      {/* How It Works */}
+      <section className="border-t border-border bg-muted/30">
+        <div className="container max-w-screen-2xl py-24 md:py-32">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-16 text-center">
+              {t.howItWorksTitle}
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="flex items-start gap-6">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold">
+                  1
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-1">{t.step1Title}</h3>
+                  <p className="text-muted-foreground">{t.step1Desc}</p>
+                </div>
               </div>
-              <div className="grid gap-2">
-                <h3 className="text-xl font-semibold">
-                  {lang === 'en' ? 'Effortless tracking' : '손쉬운 추적'}
-                </h3>
-                <p className="text-muted-foreground">
-                  {lang === 'en' 
-                    ? 'Quick check-ins build your progress log automatically. End each day knowing exactly what you shipped.'
-                    : '간단한 체크인이 자동으로 진행 로그를 만듭니다. 매일 무엇을 완료했는지 정확히 알 수 있습니다.'}
-                </p>
+
+              <div className="flex items-start gap-6">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold">
+                  2
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-1">{t.step2Title}</h3>
+                  <p className="text-muted-foreground">{t.step2Desc}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-6">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold">
+                  3
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg mb-1">{t.step3Title}</h3>
+                  <p className="text-muted-foreground">{t.step3Desc}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -218,27 +299,31 @@ function App() {
       <section className="border-t border-border">
         <div className="container max-w-screen-2xl py-24 md:py-32">
           <div className="mx-auto flex max-w-[58rem] flex-col items-center gap-8 text-center">
-            <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-              {lang === 'en' ? 'Stop staring. Start shipping.' : '망설임을 멈추고 실행을 시작하세요'}
+            <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl whitespace-pre-line">
+              {t.ctaTitle.split('\\n').join('\n')}
             </h2>
             <p className="max-w-[600px] text-lg text-muted-foreground md:text-xl">
-              {lang === 'en' 
-                ? 'Lighthouse turns paralysis into progress. Break big work into small wins.'
-                : 'Lighthouse가 정체를 진행으로 바꿉니다. 큰 작업을 작은 성취로.'}
+              {t.ctaSubtitle}
             </p>
-            <form onSubmit={handleSubmit} className="flex w-full max-w-md flex-col gap-2 sm:flex-row">
+            <form onSubmit={handleSubmit} id="cta-form" className="flex w-full max-w-md flex-col gap-2 sm:flex-row">
               <Input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder={lang === 'en' ? 'your@email.com' : 'your@email.com'}
+                placeholder={t.emailPlaceholderShort}
                 required
                 className="h-10"
               />
               <Button type="submit" size="default" className="h-10">
-                {lang === 'en' ? 'Join Waitlist' : '대기자 등록'}
+                {t.joinWaitlist}
               </Button>
             </form>
+            {submitted && (
+              <p className="flex items-center gap-2 text-sm font-medium text-green-600">
+                <Check className="h-4 w-4" />
+                {t.waitlistSuccess}
+              </p>
+            )}
           </div>
         </div>
       </section>
@@ -256,9 +341,20 @@ function App() {
               </div>
               <span className="font-medium text-foreground">Lighthouse</span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              © 2026 Lighthouse. All rights reserved.
-            </p>
+            <div className="flex gap-6 text-sm text-muted-foreground">
+              <a href="#" className="hover:text-foreground transition">
+                {t.privacy}
+              </a>
+              <a href="#" className="hover:text-foreground transition">
+                {t.terms}
+              </a>
+              <a href="mailto:hello@tasklighthouse.app" className="hover:text-foreground transition">
+                {t.contact}
+              </a>
+            </div>
+          </div>
+          <div className="text-center mt-6 text-sm text-muted-foreground">
+            {t.copyright}
           </div>
         </div>
       </footer>
