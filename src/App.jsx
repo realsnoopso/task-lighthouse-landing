@@ -13,7 +13,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-rose-50">
+    <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-rose-50 overflow-x-hidden">
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
@@ -31,19 +31,19 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 md:py-32">
+      <section className="container mx-auto px-4 py-12 md:py-20 md:py-32">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-6xl md:text-8xl font-serif font-light text-neutral-900 mb-8 leading-tight tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-light text-neutral-900 mb-6 md:mb-8 leading-tight tracking-tight">
             Break big work<br />into small wins
           </h1>
-          <p className="text-xl md:text-2xl text-neutral-600 mb-16 leading-relaxed font-light">
-            AI turns overwhelming projects into actionable steps.<br />
+          <p className="text-lg sm:text-xl md:text-2xl text-neutral-600 mb-8 md:mb-12 md:mb-10 md:mb-16 leading-relaxed font-light px-4">
+            AI turns overwhelming projects into actionable steps.<br className="hidden sm:block" />
             Know exactly what to do next, every single day.
           </p>
           
           {/* Email Form */}
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-4">
-            <div className="flex gap-2">
+          <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-4 px-4">
+            <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
                 value={email}
@@ -54,7 +54,7 @@ function App() {
               />
               <button
                 type="submit"
-                className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium hover:bg-neutral-800 transition-all hover:scale-105 whitespace-nowrap"
+                className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium hover:bg-neutral-800 transition-all hover:scale-105 w-full sm:w-auto"
               >
                 Join Waitlist
               </button>
@@ -70,10 +70,10 @@ function App() {
       </section>
 
       {/* Problem Section */}
-      <section className="bg-white/60 backdrop-blur py-24">
+      <section className="bg-white/60 backdrop-blur py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-serif font-light text-neutral-900 mb-16 text-center">
+            <h2 className="text-3xl md:text-5xl font-serif font-light text-neutral-900 mb-10 md:mb-16 text-center">
               Sound familiar?
             </h2>
             <div className="space-y-8">
@@ -110,18 +110,18 @@ function App() {
       </section>
 
       {/* Solution Section */}
-      <section className="py-20">
+      <section className="py-12 md:py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-serif font-light text-neutral-900 mb-6 text-center">
+            <h2 className="text-3xl md:text-5xl font-serif font-light text-neutral-900 mb-6 text-center">
               Lighthouse guides you through
             </h2>
-            <p className="text-center text-neutral-600 mb-20 text-lg font-light">
+            <p className="text-center text-neutral-600 mb-8 md:mb-12 md:mb-20 text-lg font-light">
               AI breaks down your work, plans your day, and tracks your wins.
             </p>
             
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white/80 backdrop-blur rounded-2xl p-10 border border-neutral-200/50 hover:shadow-md transition">
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+              <div className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-md transition">
                 <div className="text-4xl mb-4">🧩</div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">Smart decomposition</h3>
                 <p className="text-neutral-600">
@@ -129,7 +129,7 @@ function App() {
                 </p>
               </div>
 
-              <div className="bg-white/80 backdrop-blur rounded-2xl p-10 border border-neutral-200/50 hover:shadow-md transition">
+              <div className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-md transition">
                 <div className="text-4xl mb-4">☀️</div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">Daily planning ritual</h3>
                 <p className="text-neutral-600">
@@ -137,7 +137,7 @@ function App() {
                 </p>
               </div>
 
-              <div className="bg-white/80 backdrop-blur rounded-2xl p-10 border border-neutral-200/50 hover:shadow-md transition">
+              <div className="bg-white/80 backdrop-blur rounded-2xl p-6 md:p-10 border border-neutral-200/50 hover:shadow-md transition">
                 <div className="text-4xl mb-4">✅</div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">Effortless tracking</h3>
                 <p className="text-neutral-600">
@@ -150,10 +150,10 @@ function App() {
       </section>
 
       {/* How It Works */}
-      <section className="bg-white/60 backdrop-blur py-24">
+      <section className="bg-white/60 backdrop-blur py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-serif font-light text-neutral-900 mb-16 text-center">
+            <h2 className="text-3xl md:text-5xl font-serif font-light text-neutral-900 mb-10 md:mb-16 text-center">
               How it works
             </h2>
             
@@ -199,16 +199,16 @@ function App() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-br from-amber-100 via-rose-100 to-orange-100">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-amber-100 via-rose-100 to-orange-100">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-6xl font-serif font-light mb-8 text-neutral-900">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif font-light mb-8 text-neutral-900">
             Stop staring.<br className="md:hidden" /> Start shipping.
           </h2>
-          <p className="text-neutral-700 text-lg mb-12 max-w-2xl mx-auto font-light">
+          <p className="text-neutral-700 text-lg mb-8 md:mb-12 max-w-2xl mx-auto font-light">
             Lighthouse turns paralysis into progress. Break big work into small wins.
           </p>
-          <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-            <div className="flex gap-2">
+          <form onSubmit={handleSubmit} className="max-w-md mx-auto px-4">
+            <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
                 value={email}
@@ -219,7 +219,7 @@ function App() {
               />
               <button
                 type="submit"
-                className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium hover:bg-neutral-800 transition-all hover:scale-105 whitespace-nowrap"
+                className="px-8 py-3.5 bg-neutral-900 text-white rounded-full font-medium hover:bg-neutral-800 transition-all hover:scale-105 w-full sm:w-auto"
               >
                 Join Waitlist
               </button>
