@@ -17,8 +17,8 @@ function App() {
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-3xl">🏮</span>
+          <div className="flex items-center gap-3">
+            <img src="/lighthouse-logo.svg" alt="Lighthouse" className="w-8 h-8" />
             <span className="text-xl font-bold text-slate-900">Lighthouse</span>
           </div>
           <a
@@ -235,8 +235,8 @@ function App() {
       <footer className="bg-slate-50 py-8 border-t border-slate-200">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🏮</span>
+            <div className="flex items-center gap-3">
+              <img src="/lighthouse-logo.svg" alt="Lighthouse" className="w-7 h-7" />
               <span className="font-semibold text-slate-900">Lighthouse</span>
             </div>
             <div className="flex gap-6 text-sm text-slate-600">

@@ -1,0 +1,25 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Lighthouse base -->
+  <path d="M16 42h16v4H16z" fill="#8B5CF6"/>
+  
+  <!-- Lighthouse body - striped -->
+  <rect x="18" y="22" width="12" height="20" fill="#FFF"/>
+  <rect x="18" y="22" width="12" height="4" fill="#EF4444"/>
+  <rect x="18" y="30" width="12" height="4" fill="#EF4444"/>
+  <rect x="18" y="38" width="12" height="4" fill="#EF4444"/>
+  
+  <!-- Lighthouse top (light house) -->
+  <path d="M24 2L17 14h14L24 2z" fill="#FBBF24"/>
+  
+  <!-- Light beam -->
+  <path d="M24 8L10 14h28L24 8z" fill="#FCD34D" opacity="0.4"/>
+  <path d="M24 8L6 16h36L24 8z" fill="#FDE68A" opacity="0.2"/>
+  
+  <!-- Lighthouse roof -->
+  <rect x="16" y="14" width="16" height="8" fill="#DC2626"/>
+  
+  <!-- Windows -->
+  <circle cx="24" cy="18" r="1.5" fill="#60A5FA"/>
+  <circle cx="24" cy="26" r="1.5" fill="#60A5FA"/>
+  <circle cx="24" cy="34" r="1.5" fill="#60A5FA"/>
+</svg>
